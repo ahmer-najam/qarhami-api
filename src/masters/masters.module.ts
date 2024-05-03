@@ -8,10 +8,13 @@ import { SerialService } from 'src/serial/serial.service';
 import { DeviceMaster } from './device-master/device-master.entity';
 import { DeviceMasterController } from './device-master/device-master.controller';
 import { DeviceMasterService } from './device-master/device-master.service';
+import { Manufacturers } from './manufacturers/manufacturers.entity';
+import { ManufacturersController } from './manufacturers/manufacturers.controller';
+import { ManufacturersService } from './manufacturers/manufacturers.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([AttachmentType, Serial, DeviceMaster])],
-  controllers: [AttachmentTypeController, DeviceMasterController],
-  providers: [AttachmentTypeService, SerialService, DeviceMasterService],
+  imports: [TypeOrmModule.forFeature([DeviceMaster, Manufacturers])],
+  controllers: [DeviceMasterController, ManufacturersController],
+  providers: [DeviceMasterService, ManufacturersService],
 })
 export class MastersModule {}

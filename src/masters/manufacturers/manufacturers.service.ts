@@ -1,35 +1,35 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 import { MongoRepository } from 'typeorm';
-import { DeviceMaster } from './device-master.entity';
+import { Manufacturers } from './manufacturers.entity';
 import { ObjectId } from 'mongodb';
 
 @Injectable()
-export class DeviceMasterService {
+export class ManufacturersService {
   constructor(
-    @InjectRepository(DeviceMaster)
-    private readonly deviceMasterRepo: MongoRepository<DeviceMaster>,
+    @InjectRepository(Manufacturers)
+    private readonly manufacturersRepo: MongoRepository<Manufacturers>,
   ) {}
 
   async getAllData() {
-    return await this.deviceMasterRepo.find();
+    return await this.manufacturersRepo.find();
   }
 
   async getDataById(id) {
-    let _result = await this.deviceMasterRepo.findOneBy({
+    let _result = await this.manufacturersRepo.findOneBy({
       where: { _id: new ObjectId(id) },
     });
     return _result;
   }
 
-  async saveData(body: DeviceMaster) {
+  async saveData(body: Manufacturers) {
     body.updatedAt = new Date();
 
     if (!body.id) {
       body.createdAt = new Date();
-      return await this.deviceMasterRepo.save(body);
+      return await this.manufacturersRepo.save(body);
     } else {
-      let _result = await this.deviceMasterRepo.update(body.id, body);
+      let _result = await this.manufacturersRepo.update(body.id, body);
       return body;
     }
   }

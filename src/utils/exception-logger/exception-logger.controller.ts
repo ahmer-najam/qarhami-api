@@ -1,25 +1,25 @@
 import { Body, Controller, Get, Post, Param, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { DeviceMaster } from './device-master.entity';
-import { DeviceMasterService } from './device-master.service';
+import { ExceptionLogger } from './exception-logger.entity';
+import { ExceptionLoggerService } from './exception-logger.service';
 
-@Controller('device-master')
-@ApiTags('masters')
-export class DeviceMasterController {
-  constructor(private service: DeviceMasterService) {}
+@Controller('exception-logger')
+@ApiTags('utils')
+export class ExceptionLoggerController {
+  constructor(private service: ExceptionLoggerService) {}
 
   @Get('GetAllData')
   async getAllData() {
     return await this.service.getAllData();
   }
 
-  @Get('GetDataById/:id')
+  @Get('GetDataById')
   async getDataById(@Param('id') id) {
     return await this.service.getDataById(id);
   }
 
   @Post('postData')
-  async saveData(@Body() body: DeviceMaster) {
+  async saveData(@Body() body: ExceptionLogger) {
     return this.service.saveData(body);
   }
 }

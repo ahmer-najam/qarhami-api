@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -37,11 +37,11 @@ import { ServeStaticModule } from '@nestjs/serve-static';
       rootPath: join(__dirname, '..', 'uploads'),
       exclude: ['/api/(.*)'],
     }),
-    TypeOrmModule.forFeature([City, Serial]),
+    TypeOrmModule.forFeature(),
     MastersModule,
     UtilsModule,
   ],
-  controllers: [AppController, CityController, SerialController],
-  providers: [AppService, SerialService, CityService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
