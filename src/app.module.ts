@@ -12,6 +12,7 @@ import { MastersModule } from './masters/masters.module';
 import { UtilsModule } from './utils/utils.module';
 import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
       rootPath: join(__dirname, '..', 'uploads'),
       exclude: ['/api/(.*)'],
     }),
+    ConfigModule.forRoot(),
     TypeOrmModule.forFeature(),
     MastersModule,
     UtilsModule,

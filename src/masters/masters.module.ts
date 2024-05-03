@@ -11,10 +11,19 @@ import { DeviceMasterService } from './device-master/device-master.service';
 import { Manufacturers } from './manufacturers/manufacturers.entity';
 import { ManufacturersController } from './manufacturers/manufacturers.controller';
 import { ManufacturersService } from './manufacturers/manufacturers.service';
+import { UserAccounts } from './user-accounts/user-accounts.entity';
+import { UserAccountsService } from './user-accounts/user-accounts.service';
+import { UserAccountsController } from './user-accounts/user-accounts.controller';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([DeviceMaster, Manufacturers])],
-  controllers: [DeviceMasterController, ManufacturersController],
-  providers: [DeviceMasterService, ManufacturersService],
+  imports: [
+    TypeOrmModule.forFeature([DeviceMaster, Manufacturers, UserAccounts]),
+  ],
+  controllers: [
+    DeviceMasterController,
+    ManufacturersController,
+    UserAccountsController,
+  ],
+  providers: [DeviceMasterService, ManufacturersService, UserAccountsService],
 })
 export class MastersModule {}
