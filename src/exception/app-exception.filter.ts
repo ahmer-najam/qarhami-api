@@ -52,7 +52,6 @@ export class AppExceptionFilter implements ExceptionFilter {
   private async writeHttpLog(data: any) {
     const LOGS_DIR = join(__dirname, `${Date.now()}-logs.json`);
 
-    // console.log(data);
     try {
       await this.loggerSerice.saveData(data);
       await writeFile(LOGS_DIR, JSON.stringify(data));

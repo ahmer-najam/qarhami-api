@@ -81,8 +81,6 @@ export class UserAccountsService {
       }
     }
 
-    console.log(process.env.SECRET_KEY);
-
     const token = await this.generateToken(_user);
     return { token: token };
   }
