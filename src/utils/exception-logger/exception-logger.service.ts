@@ -27,8 +27,6 @@ export class ExceptionLoggerService {
       body.errorDetails === undefined ? '' : body.errorDetails;
     body.updatedAt = new Date();
 
-    console.log('LoggerSerice', body);
-
     if (!body.id) {
       body.createdAt = new Date(body.createdAt.toString());
       return await this.exceptionLoggerRepo.save(body);
