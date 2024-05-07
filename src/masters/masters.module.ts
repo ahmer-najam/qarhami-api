@@ -14,6 +14,7 @@ import { ManufacturersService } from './manufacturers/manufacturers.service';
 import { UserAccounts } from './user-accounts/user-accounts.entity';
 import { UserAccountsService } from './user-accounts/user-accounts.service';
 import { UserAccountsController } from './user-accounts/user-accounts.controller';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -24,6 +25,11 @@ import { UserAccountsController } from './user-accounts/user-accounts.controller
     ManufacturersController,
     UserAccountsController,
   ],
-  providers: [DeviceMasterService, ManufacturersService, UserAccountsService],
+  providers: [
+    DeviceMasterService,
+    ManufacturersService,
+    UserAccountsService,
+    JwtService,
+  ],
 })
 export class MastersModule {}

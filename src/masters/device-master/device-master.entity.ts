@@ -14,3 +14,7 @@ export class DeviceMaster {
   @Column() manufacturerId: string;
   @Column() manufacturer: string;
 }
+export class UpdateDeviceStatusDto {
+  imei: string;
+  status: string;
+}

@@ -1,10 +1,21 @@
-import { Body, Controller, Get, Post, Param, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Put,
+  Param,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { DeviceMaster } from './device-master.entity';
+import { DeviceMaster, UpdateDeviceStatusDto } from './device-master.entity';
 import { DeviceMasterService } from './device-master.service';
+import { AuthenticationGuard } from 'src/auth/guards/Authentication.guard';
 
 @Controller('device-master')
 @ApiTags('masters')
+@UseGuards(AuthenticationGuard)
 export class DeviceMasterController {
   constructor(private service: DeviceMasterService) {}
 
@@ -21,5 +32,10 @@ export class DeviceMasterController {
   @Post('postData')
   async saveData(@Body() body: DeviceMaster) {
     return this.service.saveData(body);
+  }
+
+  @Put('updateDeviceStatus')
+  async updateDeviceStatus(@Body() body: UpdateDeviceStatusDto) {
+    return this.service.updateDeviceStatus(body);
   }
 }

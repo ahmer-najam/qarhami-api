@@ -1,7 +1,7 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { MongoRepository } from 'typeorm';
-import { DeviceMaster } from './device-master.entity';
+import { DeviceMaster, UpdateDeviceStatusDto } from './device-master.entity';
 import { ObjectId } from 'mongodb';
 
 @Injectable()
@@ -32,5 +32,20 @@ export class DeviceMasterService {
       let _result = await this.deviceMasterRepo.update(body.id, body);
       return body;
     }
+  }
+
+  async updateDeviceStatus(body: UpdateDeviceStatusDto) {
+    let _device = await this.deviceMasterRepo.findOneBy({
+      where: { imei: body.imei },
+    });
+
+    if (!body) {
+      throw new NotFoundException({ message: 'Device not found' });
+    }
+
+    _device.updatedAt = new Date();
+    _device.status = body.status;
+
+    return await this.deviceMasterRepo.update(_device.id, _device);
   }
 }

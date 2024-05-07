@@ -13,14 +13,17 @@ import { UtilsModule } from './utils/utils.module';
 import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { ConfigModule } from '@nestjs/config';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthenticationGuard } from './auth/guards/Authentication.guard';
+import { JwtModule, JwtService } from '@nestjs/jwt';
 
 @Module({
   imports: [
     //Mongo Local
     // TypeOrmModule.forRoot({
     //   type: 'mongodb',
-    //   url: 'mongodb://172.16.1.226:27017/mbe-erp',
-    //   database: 'mbe-erp',
+    //   url: 'mongodb://172.16.1.226:27017/qarhami-db',
+    //   database: 'qarhami-db',
     //   entities: [__dirname + '/**/*.entity{.ts,.js}'],
     //   ssl: false,
     //   useUnifiedTopology: true,
@@ -42,8 +45,12 @@ import { ConfigModule } from '@nestjs/config';
     TypeOrmModule.forFeature(),
     MastersModule,
     UtilsModule,
+    JwtModule.register({
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: '1d' },
+    }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [JwtService, AuthenticationGuard, AppService, JwtService],
 })
 export class AppModule {}
