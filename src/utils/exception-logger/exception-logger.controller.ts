@@ -1,10 +1,8 @@
 import { Body, Controller, Get, Post, Param, Query } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
 import { ExceptionLogger } from './exception-logger.entity';
 import { ExceptionLoggerService } from './exception-logger.service';
 
 @Controller('exception-logger')
-@ApiTags('utils')
 export class ExceptionLoggerController {
   constructor(private service: ExceptionLoggerService) {}
 

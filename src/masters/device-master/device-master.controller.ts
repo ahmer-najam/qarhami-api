@@ -8,13 +8,11 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
 import { DeviceMaster, UpdateDeviceStatusDto } from './device-master.entity';
 import { DeviceMasterService } from './device-master.service';
 import { AuthenticationGuard } from 'src/auth/guards/Authentication.guard';
 
 @Controller('device-master')
-@ApiTags('masters')
 @UseGuards(AuthenticationGuard)
 export class DeviceMasterController {
   constructor(private service: DeviceMasterService) {}

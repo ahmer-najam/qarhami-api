@@ -7,13 +7,11 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
 import { LoginDto, UserAccounts } from './user-accounts.entity';
 import { UserAccountsService } from './user-accounts.service';
 import { AuthenticationGuard } from 'src/auth/guards/Authentication.guard';
 
 @Controller('user-accounts')
-@ApiTags('masters')
 export class UserAccountsController {
   constructor(private service: UserAccountsService) {}
 
