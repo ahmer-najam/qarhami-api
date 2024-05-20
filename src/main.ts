@@ -10,6 +10,6 @@ async function bootstrap() {
   app.useGlobalFilters(new AppExceptionFilter(myLoggerService));
   app.enableCors();
 
-  await app.listen(3000);
+  await app.listen(3200);
 }
 bootstrap();
