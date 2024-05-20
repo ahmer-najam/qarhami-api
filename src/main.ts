@@ -8,7 +8,11 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const myLoggerService = app.get(ExceptionLoggerService);
   app.useGlobalFilters(new AppExceptionFilter(myLoggerService));
-  app.enableCors();
+  app.enableCors((Options) => {
+    Options.origin = '*';
+    Options.allowedHeaders = '*';
+    Options.exposedHeaders = 'Authorization';
+  });
 
   await app.listen(3000);
 }
