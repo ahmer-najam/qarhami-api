@@ -7,7 +7,7 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { LoginDto, UserAccounts } from './user-accounts.entity';
+import { LoginDto, UserAccounts, UserVehicleDto } from './user-accounts.entity';
 import { UserAccountsService } from './user-accounts.service';
 import { AuthenticationGuard } from 'src/auth/guards/Authentication.guard';
 
@@ -27,10 +27,22 @@ export class UserAccountsController {
     return await this.service.getDataById(id);
   }
 
+  @Get('GetDataByEmail/:id')
+  @UseGuards(AuthenticationGuard)
+  async getDataByEmail(@Param('id') id) {
+    return await this.service.getDataByEmail(id);
+  }
+
   @Post('postData')
   @UseGuards(AuthenticationGuard)
   async saveData(@Body() body: UserAccounts) {
     return this.service.saveData(body);
+  }
+
+  @Post('addVehicle')
+  @UseGuards(AuthenticationGuard)
+  async addVehicle(@Body() body: UserVehicleDto) {
+    return this.service.addVehicle(body);
   }
 
   @Post('login')

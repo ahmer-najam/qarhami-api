@@ -5,10 +5,11 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { MongoRepository } from 'typeorm';
-import { LoginDto, UserAccounts } from './user-accounts.entity';
+import { LoginDto, UserAccounts, UserVehicleDto } from './user-accounts.entity';
 import { ObjectId } from 'mongodb';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
+import * as uuid from 'short-uuid';
 
 @Injectable()
 export class UserAccountsService {
@@ -25,6 +26,15 @@ export class UserAccountsService {
     let _result = await this.userAccountsRepo.findOneBy({
       where: { _id: new ObjectId(id) },
     });
+    return _result;
+  }
+
+  async getDataByEmail(id) {
+    let _result = await this.userAccountsRepo.findOneBy({
+      where: { email: id },
+    });
+
+    delete _result.password;
     return _result;
   }
 
@@ -55,6 +65,31 @@ export class UserAccountsService {
     }
   }
 
+  async addVehicle(body: UserVehicleDto) {
+    let _user = await this.userAccountsRepo.findOneBy({
+      email: body.email,
+    });
+
+    if (_user == null) {
+      throw new BadRequestException({
+        statusCode: 400,
+        message: 'User not found',
+        error: 'Bad Request',
+      });
+    }
+
+    if (!_user.vehicles) {
+      _user.vehicles = [];
+    }
+
+    body.vehicle.id = uuid.generate();
+
+    _user.vehicles = [..._user?.vehicles, body.vehicle];
+    let _result = await this.userAccountsRepo.update(_user.id, _user);
+    delete _user.password;
+    return _user;
+  }
+
   async login(loginData: LoginDto) {
     let _user = await this.userAccountsRepo.findOneBy({
       where: { email: loginData.email },
@@ -82,7 +117,8 @@ export class UserAccountsService {
     }
 
     const token = await this.generateToken(_user);
-    return { token: token };
+    delete _user.password;
+    return { token: token, ..._user };
   }
 
   async generateToken(user: UserAccounts): Promise<string> {
