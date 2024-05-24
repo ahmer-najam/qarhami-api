@@ -28,7 +28,6 @@ export class AuthenticationGuard implements CanActivate {
         // return false;
       } else {
         if (user.exp < Date.now() / 1000) {
-          console.log(user.exp, Date.now());
           throw new BadRequestException({ details: 'Session Expired' });
           return false;
         }

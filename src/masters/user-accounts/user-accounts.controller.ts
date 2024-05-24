@@ -7,7 +7,12 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { LoginDto, UserAccounts, UserVehicleDto } from './user-accounts.entity';
+import {
+  LoginDto,
+  RefreshTokenDto,
+  UserAccounts,
+  UserVehicleDto,
+} from './user-accounts.entity';
 import { UserAccountsService } from './user-accounts.service';
 import { AuthenticationGuard } from 'src/auth/guards/Authentication.guard';
 
@@ -48,5 +53,10 @@ export class UserAccountsController {
   @Post('login')
   async login(@Body() body: LoginDto) {
     return this.service.login(body);
+  }
+
+  @Post('refreshToken')
+  async refreshToken(@Body() body: RefreshTokenDto) {
+    return this.service.refreshToken(body);
   }
 }

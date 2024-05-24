@@ -5,7 +5,12 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { MongoRepository } from 'typeorm';
-import { LoginDto, UserAccounts, UserVehicleDto } from './user-accounts.entity';
+import {
+  LoginDto,
+  RefreshTokenDto,
+  UserAccounts,
+  UserVehicleDto,
+} from './user-accounts.entity';
 import { ObjectId } from 'mongodb';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
@@ -114,6 +119,24 @@ export class UserAccountsService {
           error: 'Unauthorized',
         });
       }
+    }
+
+    const token = await this.generateToken(_user);
+    delete _user.password;
+    return { token: token, ..._user };
+  }
+
+  async refreshToken(body: RefreshTokenDto) {
+    let _user = await this.userAccountsRepo.findOneBy({
+      where: { email: body.email },
+    });
+
+    if (!_user) {
+      throw new UnauthorizedException({
+        statusCode: 401,
+        message: 'Invalid credentials',
+        error: 'Unauthorized',
+      });
     }
 
     const token = await this.generateToken(_user);

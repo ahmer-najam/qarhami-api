@@ -26,6 +26,7 @@ export class UserVehicle {
   @Column() model: string;
   @Column() color: string;
   @Column() plateNo: string;
+  @Column() deviceSerial?: string;
   @Column() vin: string;
   @Column() status?: string;
   @Column() imageUrl?: string;
@@ -34,6 +35,10 @@ export class UserVehicle {
 export class LoginDto {
   email: string;
   password: string;
+}
+
+export class RefreshTokenDto {
+  email: string;
 }
 
 export class UserVehicleDto {
