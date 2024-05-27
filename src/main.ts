@@ -11,6 +11,7 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       'https://ahami-app.vercel.app/',
+      'https://qarhami-pwa-app.vercel.app',
       'http://localhost:5173',
       'http://localhost:4173',
     ],
