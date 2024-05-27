@@ -8,7 +8,9 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const myLoggerService = app.get(ExceptionLoggerService);
   app.useGlobalFilters(new AppExceptionFilter(myLoggerService));
-  app.enableCors();
+  app.enableCors({
+    origin: '*',
+  });
   // app.enableCors({
   //   origin: [
   //     'https://ahami-app.vercel.app/',
