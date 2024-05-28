@@ -107,14 +107,11 @@ router.post("/login", async (req, res) => {
       const _token = jwt.sign({ id: _user._id }, process.env.JWT_SECRET_KEY, {
         expiresIn: "1d",
       });
+      delete _user._doc.password;
       res.status(200).send({
-        message: "Login successful",
-        success: true,
         token: _token,
-        email: _user.email,
-        role: _user.role,
-        fullName: _user.fullName,
-        source: process.env.API_NAME,
+        ..._user._doc,
+        id: _user._id,
       });
     }
   } catch (e) {
