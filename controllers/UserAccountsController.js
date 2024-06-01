@@ -53,6 +53,33 @@ router.get("/getDataByEmail/:id", AuthMiddleware, async (req, res) => {
   }
 });
 
+//ADD VEHICLE
+router.post("/addVehicle", AuthMiddleware, async (req, res) => {
+  try {
+    const _user = await UserAccounts.findOne({ email: req.body.email });
+    if (!_user) {
+      res.status(404).send({
+        message: "User Not Found",
+      });
+    }
+
+    console.log(_user);
+    _user.vehicles = [req.body.vehicle, ..._user.vehicles];
+
+    const _result = await UserAccounts.findOneAndUpdate(
+      { email: req.body.email },
+      _user
+    );
+
+    res.status(200).send({
+      message: "Vehicle Added Successfully",
+      success: true,
+      data: _user,
+    });
+  } catch (e) {
+    sendStatus(res, 500, "System error", false);
+  }
+});
 // ---------------------- AUTH -----------------------------------------
 
 router.post("/register", async (req, res) => {

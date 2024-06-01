@@ -12,7 +12,7 @@ module.exports = async (req, res, next) => {
           source: process.env.API_NAME,
         });
       } else {
-        req.body.email = decoded.id;
+        //req.body.email = decoded.id;
         next();
       }
     });
