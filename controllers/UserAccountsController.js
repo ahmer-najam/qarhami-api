@@ -63,7 +63,6 @@ router.post("/addVehicle", AuthMiddleware, async (req, res) => {
       });
     }
 
-    console.log(_user);
     _user.vehicles = [req.body.vehicle, ..._user.vehicles];
 
     const _result = await UserAccounts.findOneAndUpdate(
