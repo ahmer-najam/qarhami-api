@@ -93,7 +93,6 @@ router.put("/updateVehicle", AuthMiddleware, async (req, res) => {
       let doc = i._doc;
       // console.log(doc);
       if (doc.vin == req.body.vin) {
-        console.log("FOUND", { ...i, ...req.body.vehicle });
         return { ...i, ...req.body.vehicle };
       } else {
         return i;
@@ -104,13 +103,6 @@ router.put("/updateVehicle", AuthMiddleware, async (req, res) => {
       { email: req.body.email },
       _user
     );
-
-    // _user.vehicles = [req.body.vehicle, ..._user.vehicles];
-
-    // const _result = await UserAccounts.findOneAndUpdate(
-    //   { email: req.body.email },
-    //   _user
-    // );
 
     res.status(200).send({
       message: "Vehicle Updated Successfully",
