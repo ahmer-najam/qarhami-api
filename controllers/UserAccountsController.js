@@ -80,7 +80,7 @@ router.post("/addVehicle", AuthMiddleware, async (req, res) => {
   }
 });
 
-router.patch("/updateVehicle", AuthMiddleware, async (req, res) => {
+router.put("/updateVehicle", AuthMiddleware, async (req, res) => {
   try {
     const _user = await UserAccounts.findOne({ email: req.body.email });
     if (!_user) {
