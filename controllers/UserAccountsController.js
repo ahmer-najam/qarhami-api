@@ -79,6 +79,48 @@ router.post("/addVehicle", AuthMiddleware, async (req, res) => {
     sendStatus(res, 500, "System error", false);
   }
 });
+
+router.patch("/updateVehicle", AuthMiddleware, async (req, res) => {
+  try {
+    const _user = await UserAccounts.findOne({ email: req.body.email });
+    if (!_user) {
+      res.status(404).send({
+        message: "User Not Found",
+      });
+    }
+
+    _user.vehicles = _user.vehicles.map((i) => {
+      let doc = i._doc;
+      // console.log(doc);
+      if (doc.vin == req.body.vin) {
+        console.log("FOUND", { ...i, ...req.body.vehicle });
+        return { ...i, ...req.body.vehicle };
+      } else {
+        return i;
+      }
+    });
+
+    const _result = await UserAccounts.findOneAndUpdate(
+      { email: req.body.email },
+      _user
+    );
+
+    // _user.vehicles = [req.body.vehicle, ..._user.vehicles];
+
+    // const _result = await UserAccounts.findOneAndUpdate(
+    //   { email: req.body.email },
+    //   _user
+    // );
+
+    res.status(200).send({
+      message: "Vehicle Updated Successfully",
+      success: true,
+      data: _user,
+    });
+  } catch (e) {
+    sendStatus(res, 500, "System error", false);
+  }
+});
 // ---------------------- AUTH -----------------------------------------
 
 router.post("/register", async (req, res) => {
