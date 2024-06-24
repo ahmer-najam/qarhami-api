@@ -7,6 +7,7 @@ sudo docker ps
 # --Docker Build & Push
 
 docker build -t ahmernajam/qarhami-api-v2:latest .
+docker build -t qarhami-api-v2:latest .
 docker login -u ahmernajam
 docker push ahmernajam/qarhami-api-v2:latest
 
@@ -46,3 +47,12 @@ sudo docker cp ~/mongobkp/mbe-erp/ mbe-mongo:/data/db/backups
 sudo docker exec -it my-pro-app-v1 sh
 cd /data/db/backups/mbe-erp
 ls -lt
+
+# --AWS
+
+aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 590184119210.dkr.ecr.us-east-2.amazonaws.docker build -t qarhami-api-reg .
+docker tag qarhami-api-reg:latest 590184119210.dkr.ecr.us-east-2.amazonaws.com/qarhami-api-reg:latest
+docker push 590184119210.dkr.ecr.us-east-2.amazonaws.com/qarhami-api-reg:latest
+
+--lb
+http://qarhami-api-lb-1809598928.us-east-2.elb.amazonaws.com/

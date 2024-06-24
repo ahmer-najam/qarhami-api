@@ -10,7 +10,11 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("Api is running...");
+  res.send({ message: "Api is running..." });
+});
+
+app.get("/health", (req, res) => {
+  res.send({ message: "Api is running..." });
 });
 
 // -------------------------------- ROUTES -----------------------------------------------------//
