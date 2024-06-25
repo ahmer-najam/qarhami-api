@@ -21,6 +21,7 @@ app.get("/health", (req, res) => {
 // MASTERS //
 app.use("/cities", require("./controllers/CitiesController"));
 app.use("/user-accounts", require("./controllers/UserAccountsController"));
+app.use("/listener", require("./controllers/ListenerController"));
 
 // PURCHASING //
 
