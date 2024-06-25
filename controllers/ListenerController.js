@@ -3,7 +3,7 @@ var router = express.Router();
 var ObjectId = require("mongoose").Types.ObjectId;
 
 const { sendStatus } = require("../utils/ErrLogUtil");
-const { Listener } = require("../models/listenerModel");
+const { Listener } = require("../models/ListenerModel");
 
 //Get Method
 //Save Data Method
