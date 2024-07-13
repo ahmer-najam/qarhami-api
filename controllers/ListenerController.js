@@ -2,7 +2,6 @@ const express = require("express");
 var router = express.Router();
 var ObjectId = require("mongoose").Types.ObjectId;
 
-const { sendStatus } = require("../utils/ErrLogUtil");
 const { Listener } = require("../models/ListenerModel");
 
 //Get Method
@@ -30,7 +29,11 @@ router.post("/postData", async (req, res) => {
       res.status(200).send(req.body);
     }
   } catch (error) {
-    sendStatus(res, 500, "System error", false);
+    res.status(500).send({
+      message: e.message,
+      success: false,
+      source: process.env.API_NAME,
+    });
   }
 });
 
